@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   list: [],
+  listDone: [],
 };
 
 const addTodoSlice = createSlice({
@@ -12,7 +13,9 @@ const addTodoSlice = createSlice({
       state.list.push(action.payload);
     },
     removeTodo: (state, action) => {
-      state.list = state.list.filter((todo) => todo.id);
+      const index = action.payload;
+      const removedItem = state.list.splice(index, 1);
+      state.listDone.push(removedItem[0]);
     },
   },
 });

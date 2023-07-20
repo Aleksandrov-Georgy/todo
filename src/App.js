@@ -3,10 +3,11 @@ import styles from './App.module.scss';
 import { addTodo } from './redux/slice/todoSlice';
 import { removeTodo } from './redux/slice/todoSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineClose, AiOutlineCheck } from 'react-icons/ai';
 
 function App() {
   const listTodo = useSelector((state) => state.addTodo.list);
+  const listDone = useSelector((state) => state.addTodo.listDone);
 
   const dispatch = useDispatch();
   const [value, setValue] = React.useState('');
@@ -20,8 +21,8 @@ function App() {
     setValue('');
   };
 
-  const doneList = () => {
-    dispatch(removeTodo(value));
+  const doneList = (index) => {
+    dispatch(removeTodo(index));
   };
 
   return (
@@ -32,15 +33,30 @@ function App() {
         Add todo
       </button>
       <ul>
-        <h3>{`Ждут выполнения ${listTodo.length} задач`}</h3>
-        {listTodo.map((item, index, id) => {
-          return (
-            <li key={index}>
-              {item}
-              <AiOutlineClose className={styles.closeIcon} onClick={(value) => doneList(value)} />
-            </li>
-          );
-        })}
+        <div className={styles.todoLists}>
+          <div>
+            <h3>{`Ждут выполнения ${listTodo.length} задач`}</h3>
+            {listTodo.map((item, index) => {
+              return (
+                <li key={item}>
+                  {item}
+                  <AiOutlineClose className={styles.closeIcon} onClick={() => doneList(index)} />
+                </li>
+              );
+            })}
+          </div>
+          <div>
+            <h3>{`Завершено ${listDone.length} задач`}</h3>
+            {listDone.map((item, index) => {
+              return (
+                <li key={item}>
+                  {item}
+                  <AiOutlineCheck className={styles.doneIcon} />
+                </li>
+              );
+            })}
+          </div>
+        </div>
       </ul>
     </div>
   );

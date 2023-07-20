@@ -134,4 +134,14 @@ h6 {
     margin-left: 5px;
     color: red;
   }
+
+  .doneIcon {
+    margin-left: 5px;
+    color: green;
+  }
+  .todoLists {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 60px;
+  }
 }
